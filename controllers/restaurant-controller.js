@@ -20,10 +20,7 @@ const restaurantController = {
     return Restaurant.findByPk(req.params.id, { include: Category, nest: true })
       .then(restaurant => {
         if (!restaurant) throw new Error("Restaurant didn't exist!")
-
-        // 當按下頁面重新整理時，Cache-Control 就會出現，以此作為判斷避免觀看數+1
-        const cacheControl = req.rawHeaders.includes('Cache-Control')
-        return !cacheControl ? restaurant.update({ viewCounts: restaurant.viewCounts + 1 }) : restaurant
+        return restaurant.increment('viewCounts')
       })
       .then(restaurant => res.render('restaurant', { restaurant: restaurant.toJSON() }))
       .catch(err => next(err))
