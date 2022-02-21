@@ -38,6 +38,7 @@ router.get('/logout', userController.logout)
 
 // 餐廳
 router.get('/restaurants', authenticated, restController.getRestaurants)
+router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
 router.get('/restaurants/feeds', authenticated, restController.getFeeds)
 router.get('/restaurants/:id', authenticated, restController.getRestaurant)
 
